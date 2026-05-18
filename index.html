@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Anzalna Landur — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#080808;color:#c8ffc8;font-family:'Share Tech Mono',monospace;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:#080808;}
+::-webkit-scrollbar-thumb{background:#00ff4144;border-radius:4px;}
+
+/* MATRIX BG */
+#matrix-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.matrix-col{position:absolute;top:0;font-family:monospace;font-size:0.85rem;color:#00ff4109;white-space:nowrap;writing-mode:vertical-rl;letter-spacing:0.4em;user-select:none;animation:matfall linear infinite;}
+@keyframes matfall{from{transform:translateY(-100%);}to{transform:translateY(120vh);}}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,0.93);backdrop-filter:blur(12px);border-bottom:1px solid #00ff4122;padding:0 clamp(1rem,5vw,4rem);height:52px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{font-weight:700;font-size:1rem;color:#00ff41;cursor:pointer;text-shadow:0 0 10px #00ff4188;letter-spacing:0.1em;text-decoration:none;}
+.nav-links{display:flex;gap:1.8rem;}
+.nav-links a{color:#4a7a4a;font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
+.nav-links a:hover{color:#00ff41;text-shadow:0 0 8px #00ff41;}
+
+/* GLOW CARD */
+.glow-card{background:#0d0d0d;border:1px solid #1a2a1a;border-radius:12px;transition:all 0.2s;cursor:default;}
+.glow-card:hover{border-color:#00ff41;box-shadow:0 0 0 1px #00ff4155,0 0 20px #00ff4144;}
+.glow-card:active{border-color:#00ff41;box-shadow:0 0 0 2px #00ff41,0 0 30px #00ff4188,inset 0 0 20px #00ff4111;}
+
+/* HERO */
+#hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:4rem clamp(1rem,7vw,6rem);position:relative;}
+.hero-tag{display:inline-block;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#00ff41;border:1px solid #00ff4144;padding:0.28rem 0.9rem;border-radius:4px;margin-bottom:1.4rem;}
+#scramble-name{font-size:clamp(2rem,5.5vw,4.5rem);font-weight:700;line-height:1;letter-spacing:0.05em;margin-bottom:1.4rem;color:#00ff41;text-shadow:0 0 10px #00ff41;white-space:pre;min-height:1.1em;transition:text-shadow 0.5s;}
+#scramble-name.done{text-shadow:0 0 20px #00ff41,0 0 40px #00ff4166;}
+.hero-bio{max-width:480px;color:#4a7a4a;font-size:0.88rem;line-height:2;margin-bottom:2.5rem;}
+.stats-grid{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.stat-card{flex:1;min-width:130px;padding:1.6rem 1.3rem;}
+.stat-num{font-size:clamp(1.8rem,4vw,3rem);font-weight:700;color:#00ff41;text-shadow:0 0 15px #00ff4188;line-height:1;margin-bottom:0.5rem;}
+.stat-label{font-size:0.72rem;color:#4a7a4a;letter-spacing:0.15em;text-transform:uppercase;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn{padding:0.72rem 1.6rem;border-radius:6px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:'Share Tech Mono',monospace;letter-spacing:0.1em;transition:all 0.2s;border:none;}
+.btn-primary{background:rgba(0,255,65,0.1);color:#00ff41;border:1px solid #00ff41;box-shadow:0 0 15px #00ff4133;text-shadow:0 0 8px #00ff41;}
+.btn-primary:hover{background:rgba(0,255,65,0.18);box-shadow:0 0 25px #00ff4155;}
+.btn-outline{background:transparent;color:#00ff41;border:1px solid #00ff4144;}
+.btn-outline:hover{background:rgba(0,255,65,0.1);box-shadow:0 0 15px #00ff4133;}
+
+/* DIVIDER */
+.divider{height:1px;background:linear-gradient(90deg,transparent,#00ff4133,transparent);margin:0 clamp(1rem,5vw,5rem);}
+
+/* SECTIONS */
+section{padding:5rem clamp(1rem,7vw,6rem);}
+.section-label{font-size:0.68rem;letter-spacing:0.25em;text-transform:uppercase;color:#00ff41;font-weight:700;margin-bottom:0.5rem;opacity:0.7;}
+h2{font-size:clamp(1.4rem,3vw,2.2rem);font-weight:700;margin-bottom:2rem;color:#e8ffe8;}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:3rem;align-items:start;}
+.about-text p{color:#4a7a4a;line-height:1.9;margin-bottom:0.9rem;font-size:0.85rem;}
+.about-text p span{color:#e8ffe8;}
+.info-table div{display:flex;gap:1rem;padding:0.85rem 1.3rem;border-bottom:1px solid #0d1f0d;font-size:0.8rem;}
+.info-table div:last-child{border-bottom:none;}
+.info-key{color:#4a7a4a;min-width:95px;}
+.info-val{color:#00ff41;}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.1rem;}
+.skill-card{padding:1.5rem;}
+.skill-icon{font-size:1.4rem;margin-bottom:0.6rem;}
+.skill-title{font-weight:700;font-size:0.85rem;color:#00ff41;margin-bottom:0.7rem;letter-spacing:0.05em;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:0.35rem;}
+.tag{font-size:0.65rem;font-weight:600;padding:0.2rem 0.55rem;border-radius:4px;background:rgba(0,255,65,0.08);color:#00ff41;border:1px solid rgba(0,255,65,0.2);}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.1rem;}
+.project-card{padding:1.6rem;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#00ff41,transparent);opacity:0;transition:opacity 0.3s;}
+.project-card:hover::before{opacity:1;}
+.project-num{font-size:0.65rem;color:#4a7a4a;letter-spacing:0.15em;margin-bottom:0.6rem;}
+.project-title{font-size:1rem;font-weight:700;color:#00ff41;margin-bottom:0.5rem;transition:text-shadow 0.2s;}
+.project-card:hover .project-title{text-shadow:0 0 10px #00ff4166;}
+.project-desc{color:#4a7a4a;font-size:0.8rem;line-height:1.7;margin-bottom:0.9rem;}
+.feature-list{list-style:none;flex:1;margin-bottom:1.2rem;}
+.feature-list li{font-size:0.73rem;color:#3a6a3a;padding:0.2rem 0 0.2rem 1rem;position:relative;}
+.feature-list li::before{content:'>';position:absolute;left:0;color:#00ff41;}
+.project-footer{display:flex;justify-content:flex-end;}
+.btn-view{padding:0.45rem 1rem;border-radius:6px;font-size:0.73rem;font-weight:700;background:transparent;color:#00ff41;border:1px solid #00ff4155;font-family:'Share Tech Mono',monospace;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;}
+.project-card:hover .btn-view{background:rgba(0,255,65,0.15);box-shadow:0 0 10px #00ff4133;text-shadow:0 0 8px #00ff41;}
+
+/* CONTACT */
+.contact-card{padding:clamp(1.5rem,4vw,2.8rem);max-width:560px;}
+.contact-bio{color:#4a7a4a;font-size:0.85rem;line-height:1.95;margin-bottom:1.8rem;}
+.contact-links{display:flex;flex-wrap:wrap;gap:0.8rem;}
+.contact-link{display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.2rem;background:transparent;border:1px solid #00ff4133;border-radius:6px;color:#4a7a4a;text-decoration:none;font-size:0.78rem;font-weight:700;font-family:'Share Tech Mono',monospace;transition:all 0.2s;letter-spacing:0.06em;}
+.contact-link:hover{border-color:#00ff41;color:#00ff41;box-shadow:0 0 15px #00ff4133;text-shadow:0 0 8px #00ff41;}
+
+/* FOOTER */
+footer{padding:1.6rem clamp(1rem,7vw,6rem);border-top:1px solid #00ff4122;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-name{font-weight:700;font-size:0.85rem;color:#00ff41;text-shadow:0 0 8px #00ff4166;}
+.footer-note{font-size:0.73rem;color:#3a5a3a;}
+
+/* REVEAL ANIMATION */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+@media(max-width:600px){.nav-links{gap:1rem;}.nav-links a{font-size:0.65rem;}}
+</style>
+</head>
+<body>
+
+<!-- MATRIX BG -->
+<div id="matrix-bg"></div>
+
+<div style="position:relative;z-index:1;">
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">AL://</a>
+  <div class="nav-links">
+    <a href="#about">about</a>
+    <a href="#skills">skills</a>
+    <a href="#projects">projects</a>
+    <a href="#contact">contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">Computer Engineering Student</div>
+  <div id="scramble-name">&nbsp;</div>
+  <div class="hero-bio">
+    <span style="color:#00ff41">&gt;</span> Passionate about building meaningful digital experiences.<br/>
+    <span style="color:#00ff41">&gt;</span> Turning ideas into working software — campus tools to systems.
+  </div>
+  <div class="stats-grid">
+    <div class="glow-card stat-card">
+      <div class="stat-num">9.02</div>
+      <div class="stat-label">GPA / 10</div>
+    </div>
+    <div class="glow-card stat-card">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Projects Done</div>
+    </div>
+    <div class="glow-card stat-card">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Languages</div>
+    </div>
+    <div class="glow-card stat-card">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Years of Study</div>
+    </div>
+  </div>
+  <div class="hero-btns">
+    <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">[ VIEW WORK ]</button>
+    <button class="btn btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">[ CONTACT ]</button>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label reveal">// About Me</p>
+  <h2 class="reveal">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p><span style="color:#00ff41">&gt;</span> I'm <span>Anzalna Landur</span>, a Computer Engineering student who loves building things that solve real problems.</p>
+      <p><span style="color:#00ff41">&gt;</span> My curiosity drives me from low-level C programming to interactive web apps.</p>
+      <p><span style="color:#00ff41">&gt;</span> I enjoy learning frameworks, contributing campus tech ideas, and collaborating with peers.</p>
+    </div>
+    <div class="glow-card info-table reveal">
+      <div><span class="info-key">Degree</span><span class="info-val">B.E. Computer Engineering</span></div>
+      <div><span class="info-key">CGPA</span><span class="info-val">9.1 / 10</span></div>
+      <div><span class="info-key">Focus</span><span class="info-val">Web Dev · Systems · Tools</span></div>
+      <div><span class="info-key">Languages</span><span class="info-val">C, Java, HTML, CSS, JS</span></div>
+      <div><span class="info-key">Status</span><span class="info-val">Open to internships</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label reveal">// Technical Skills</p>
+  <h2 class="reveal">What I Work With</h2>
+  <div class="skills-grid">
+    <div class="glow-card skill-card reveal">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-title">Programming Languages</div>
+      <div class="skill-tags"><span class="tag">C</span><span class="tag">Java</span><span class="tag">JavaScript</span></div>
+    </div>
+    <div class="glow-card skill-card reveal" style="transition-delay:80ms">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-title">Web Technologies</div>
+      <div class="skill-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Responsive</span></div>
+    </div>
+    <div class="glow-card skill-card reveal" style="transition-delay:160ms">
+      <div class="skill-icon">🛠️</div>
+      <div class="skill-title">Core Concepts</div>
+      <div class="skill-tags"><span class="tag">DSA</span><span class="tag">OOP</span><span class="tag">Problem Solving</span></div>
+    </div>
+    <div class="glow-card skill-card reveal" style="transition-delay:240ms">
+      <div class="skill-icon">💡</div>
+      <div class="skill-title">Soft Skills</div>
+      <div class="skill-tags"><span class="tag">Team Work</span><span class="tag">Quick Learner</span><span class="tag">Detail-Oriented</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label reveal">// Portfolio</p>
+  <h2 class="reveal">What I've Built</h2>
+  <div class="projects-grid">
+
+    <div class="glow-card project-card reveal">
+      <div class="project-num">01 // Web App</div>
+      <div class="project-title">Smart Campus Helper</div>
+      <div class="project-desc">A website packed with useful college tools — everything a student needs in one place.</div>
+      <ul class="feature-list">
+        <li>Notes sharing across subjects</li>
+        <li>Lab programs library</li>
+        <li>Interactive to-do list</li>
+        <li>Personal timetable section</li>
+        <li>Previous year question papers</li>
+        <li>Event announcements board</li>
+      </ul>
+      <div class="project-footer"><button class="btn-view">[ VIEW ]</button></div>
+    </div>
+
+    <div class="glow-card project-card reveal" style="transition-delay:100ms">
+      <div class="project-num">02 // Java App</div>
+      <div class="project-title">Student Management System</div>
+      <div class="project-desc">Track academic progress, calculate grades, and manage attendance all in one place.</div>
+      <ul class="feature-list">
+        <li>Mini CGPA calculator</li>
+        <li>Attendance percentage calculator</li>
+        <li>Full CGPA calculator</li>
+        <li>Subject-wise grade tracker</li>
+        <li>Student profile management</li>
+        <li>Academic performance overview</li>
+      </ul>
+      <div class="project-footer"><button class="btn-view">[ VIEW ]</button></div>
+    </div>
+
+    <div class="glow-card project-card reveal" style="transition-delay:200ms">
+      <div class="project-num">03 // C Program</div>
+      <div class="project-title">Quiz Master CLI</div>
+      <div class="project-desc">A command-line quiz app in C testing CS fundamentals with live scoring and leaderboards.</div>
+      <ul class="feature-list">
+        <li>Multiple choice questions</li>
+        <li>Live score tracking</li>
+        <li>Timer per question</li>
+        <li>Topic-wise question sets</li>
+        <li>High score leaderboard (file I/O)</li>
+        <li>Review mode after quiz</li>
+      </ul>
+      <div class="project-footer"><button class="btn-view">[ VIEW ]</button></div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label reveal">// Get In Touch</p>
+  <h2 class="reveal">Let's Connect</h2>
+  <div class="glow-card contact-card reveal">
+    <div class="contact-bio">
+      <span style="color:#00ff41">&gt;</span> Open to internships, projects, and tech conversations.<br/>
+      <span style="color:#00ff41">&gt;</span> Feel free to reach out through any channel below.
+    </div>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:anzalna@example.com">✉️ [ Email ]</a>
+      <a class="contact-link" href="https://github.com/" target="_blank">🐙 [ GitHub ]</a>
+      <a class="contact-link" href="https://linkedin.com/" target="_blank">💼 [ LinkedIn ]</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">Anzalna Landur</span>
+  <span class="footer-note">© 2025 // built with passion & ☕</span>
+</footer>
+
+</div><!-- end z-index wrapper -->
+
+<script>
+// MATRIX RAIN
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&";
+const bg = document.getElementById('matrix-bg');
+for(let i = 0; i < 14; i++){
+  const col = document.createElement('div');
+  col.className = 'matrix-col';
+  col.style.left = ((i * 7.3) % 100) + '%';
+  col.style.animationDuration = (9 + (i % 5) * 1.5) + 's';
+  col.style.animationDelay = ((i * 0.6) % 5) + 's';
+  col.textContent = CHARS.repeat(8);
+  bg.appendChild(col);
+}
+
+// NAME SCRAMBLE
+const FINAL = "Anzalna Landur";
+const el = document.getElementById('scramble-name');
+let frame = 0, total = 45;
+const scramble = setInterval(() => {
+  frame++;
+  if(frame >= total){
+    el.textContent = FINAL;
+    el.classList.add('done');
+    clearInterval(scramble);
+    return;
+  }
+  const progress = frame / total;
+  const revealed = Math.floor(progress * FINAL.length);
+  let result = '';
+  for(let i = 0; i < FINAL.length; i++){
+    if(FINAL[i] === ' '){ result += ' '; continue; }
+    result += i < revealed ? FINAL[i] : CHARS[Math.floor(Math.random() * CHARS.length)];
+  }
+  el.textContent = result;
+}, 50);
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
